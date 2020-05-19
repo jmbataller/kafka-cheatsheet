@@ -297,3 +297,19 @@ Consume messages between two timestamps
 ```
 kafkacat -b <broker> -C -t <topic> -o s@<epoch_start_timestamp> -o e@<epoch-end_timestamp>
 ```
+
+---
+
+Run kafka tools using confluent docker image
+
+```
+docker run -it --rm confluent/tools kafka-topics --list --bootstrap-server <broker>
+```
+
+---
+
+Run kafka command in kubernetes using confluent docker image
+
+```
+kubectl --namespace=<namespace> run --generator=run-pod/v1 cmd-kafka --image confluent/tools --rm -ti --command -- kafka-topics --list --bootstrap-server <broker>
+```
