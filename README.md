@@ -29,6 +29,19 @@ Consume from kafka topic/partition & offset
 kafka-console-consumer.sh --bootstrap-server <broker> --topic <topic> --offset <offset> --partition <partition-num>
 ```
 
+Consume from kafka topic and specify consumer group
+
+```
+kafka-console-consumer --topic <topic> --new-consumer --bootstrap-server <broker> --consumer-property group.id=<consumer_group_id>
+```
+
+#### kafka-avro-console-consumer
+
+Consumer avro messages
+
+```
+kafka-avro-console-consumer --topic <topic> --new-consumer --bootstrap-server <broker> --from-beginning --property schema.registry.url=localhost:8081 --max-messages <num-messages>
+```
 
 #### kafka-console-producer
 
@@ -116,6 +129,24 @@ kafka-topics.sh --bootstrap-server <broker> --topic <topic> --alter --replicatio
 
 #### kafka-consumer-groups
 
+List consumer groups
+
+```
+kafka-consumer-groups.sh --bootstrap-server <broker> -list
+```
+
+Describe consumer group / check consumer position / show lags
+
+```
+kafka-consumer-groups.sh --bootstrap-server <broker> --describe --group <group>
+```
+
+Delete consumer group
+
+```
+kafka-consumer-groups.sh --bootstrap-server <broker> --delete --group <group>
+```
+
 Reset offsets for a topic to latest offset for a consumer group
 
 ```
@@ -140,24 +171,6 @@ Reset offsets for a topic to a datetime (with format 'YYYY-MM-DDTHH:mm:SS.sss') 
 kafka-consumer-groups.sh --bootstrap-server <broker> --group <group> --execute --reset-offsets --to-datetime <datetime> --topic <topic> —execute
 ```
 
-Delete consumer group
-
-```
-kafka-consumer-groups.sh --bootstrap-server <broker> --delete --group <group>
-```
-
-Describe consumer group / check consumer position / show lags
-
-```
-kafka-consumer-groups.sh --bootstrap-server <broker> --describe --group <group>
-```
-
-List consumer groups
-
-```
-kafka-consumer-groups.sh --bootstrap-server <broker> -list
-```
-
 #### kafka-run-class
 
 Get/List current offsets per partition for a topic
@@ -166,12 +179,60 @@ Get/List current offsets per partition for a topic
 kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker> --topic <topic>
 ```
 
+#### kafka-configs
+
+Set retention for a topic
+
+```
+kafka-configs --zookeeper <zookeeper> --alter --entity-type topics --entity-name <topic> --add-config retention.ms=3600000
+```
+
+Print all configuration overrides for a topic
+
+```
+kafka-configs --zookeeper <zookeeper> --describe --entity-type topics --entity-name <topic>
+```
+
+Delete a configuration override for retention.ms for a topic
+
+```
+kafka-configs --zookeeper <zookeeper> --alter --entity-type topics --entity-name <topic> --delete-config retention.ms 
+```
+
 #### kafka-streams-application-reset
 
 Reset offset to latest of input topics and all the intermediary topics used by kafka streams
 
 ```
 ./kafka-streams-application-reset.sh --zookeeper <zookeeper> --application-id <consumer-group> --input-topics <topic1>... --intermediate-topics <intermediary-topic-1>... --to-latest
+```
+
+#### kafka-producer-perf-test
+
+Perf test tool that produces messages to a topic:
+
+```
+kafka-producer-perf-test --topic <topic> --throughput 10000 --record-size 300 --num-records 20000 --producer-props bootstrap.servers="<broker>"
+```
+
+#### kafka-acls
+
+Add a new consumer ACL for a topic
+
+```
+kafka-acls --authorizer-properties zookeeper.connect=<zookeeper> --add --allow-principal User:Bob --consumer --topic <topic> --group <group>
+```
+
+Add a new producer ACL to an existing topic
+
+```
+kafka-acls --authorizer-properties zookeeper.connect=<zookeeper> --add --allow-principal User:Bob --producer --topic <topic>
+```
+
+List ACLs for a topic
+
+```
+kafka-acls --authorizer-properties zookeeper.connect=<zookeeper> --list --topic <topic>
 ```
 
 --
