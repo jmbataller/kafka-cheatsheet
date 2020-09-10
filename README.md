@@ -359,6 +359,13 @@ Consume messages between two timestamps
 kafkacat -b <broker> -C -t <topic> -o s@<epoch_start_timestamp> -o e@<epoch-end_timestamp>
 ```
 
+Copy messages from a source topic to another topic
+
+```
+kafkacat -b localhost:9092 -C -t source-topic -K: -e -o beginning | \
+kafkacat -b localhost:9092 -P -t target-topic -K: 
+```
+
 ---
 
 Run kafka tools using confluent docker image
