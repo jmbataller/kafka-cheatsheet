@@ -235,6 +235,14 @@ List ACLs for a topic
 kafka-acls --authorizer-properties zookeeper.connect=<zookeeper> --list --topic <topic>
 ```
 
+#### consumer offsets
+
+List consumer offsets
+
+```
+kafka-console-consumer.sh --topic __consumer_offsets --bootstrap-server=<broker> --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter"
+```
+
 --
 
 #### kafkacat
@@ -366,7 +374,10 @@ kafkacat -b localhost:9092 -C -t source-topic -K: -e -o beginning | \
 kafkacat -b localhost:9092 -P -t target-topic -K: 
 ```
 
----
+
+--
+
+#### docker
 
 Run kafka tools using confluent docker image
 
@@ -381,3 +392,4 @@ Run kafka command in kubernetes using confluent docker image
 ```
 kubectl --namespace=<namespace> run --generator=run-pod/v1 cmd-kafka --image confluent/tools --rm -ti --command -- kafka-topics --list --bootstrap-server <broker>
 ```
+
