@@ -240,7 +240,7 @@ kafka-acls --authorizer-properties zookeeper.connect=<zookeeper> --list --topic 
 List consumer offsets
 
 ```
-kafka-console-consumer.sh --topic __consumer_offsets --bootstrap-server=<broker> --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter"
+kafka-console-consumer --topic __consumer_offsets --bootstrap-server=<broker> --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter"
 ```
 
 --
