@@ -179,6 +179,15 @@ Get/List current offsets per partition for a topic
 kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker> --topic <topic>
 ```
 
+
+Get/List current offsets per partition for a topic at an specific timestamp
+
+```
+kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <broker> --topic <topic> --time <epoch-timestamp>
+```
+
+
+
 #### kafka-configs
 
 Set retention for a topic
